@@ -40,6 +40,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	// kotlin-faker
 	implementation("io.github.serpro69:kotlin-faker:1.15.0")
+	// https://mvnrepository.com/artifact/com.github.f4b6a3/ulid-creator
+	implementation("com.github.f4b6a3:ulid-creator:5.2.3")
 	// h2
 	runtimeOnly("com.h2database:h2")
 	// postgresql
