@@ -24,6 +24,9 @@ jobs:
           java-version: '17'
           # Java distribution. See the list of supported distributions in README file
           distribution: 'corretto'
+
+      - name: Setup H2 database
+        uses: liquibase-github-actions/init-start-h2@v4.25.1
           
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
