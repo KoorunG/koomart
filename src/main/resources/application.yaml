@@ -1,4 +1,7 @@
 spring:
+  config:
+    activate:
+      on-profile: default
   datasource:
     driver-class-name: org.postgresql.Driver
     username: koorung
@@ -14,4 +17,21 @@ spring:
         show_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
     # Open Session In View 옵션... 기본값이 true임, false로 설정하자
+    open-in-view: false
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
     open-in-view: false
