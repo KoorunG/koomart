@@ -31,11 +31,11 @@ jobs:
           # Version of PostgreSQL to use
           # postgresql version: # optional, default is latest
           # POSTGRES_DB - name for the default database that is created
-          postgresql db: ${{secrets.DB}}
+          postgresql db: ${{secrets.PG_ENV_DB}}
           # POSTGRES_USER - create the specified user with superuser power
-          postgresql user: ${{secrets.USER}}
+          postgresql user: ${{secrets.PG_ENV_USER}}
           # POSTGRES_PASSWORD - superuser password
-          postgresql password: ${{secrets.PASSWORD}}
+          postgresql password: ${{secrets.PG_ENV_PASSWORD}}
           
           
       - name: Grant execute permission for gradlew
