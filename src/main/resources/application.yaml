@@ -33,5 +33,4 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-        dialect: org.hibernate.dialect.H2Dialect
     open-in-view: false
