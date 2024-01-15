@@ -24,11 +24,6 @@ jobs:
           java-version: '17'
           # Java distribution. See the list of supported distributions in README file
           distribution: 'corretto'
-          # Name of the build platform to cache dependencies. It can be "maven", "gradle" or "sbt".
-          cache: 'gradle'
-          # The path to a dependency file: pom.xml, build.gradle, build.sbt, etc. This option can be used with the `cache` option. If this option is omitted, the action searches for the dependency file in the entire repository. This option supports wildcards and a list of file names for caching multiple dependencies.
-          cache-dependency-path: 'build.gradle'
-          
           
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -42,16 +37,17 @@ jobs:
         run: zip -qq -r ./$GITHUB_SHA.zip .
         shell: bash
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: northeast-2
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-region: northeast-2
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # - name: Upload to S3
       #   run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
       # - name: Code Deploy
       #   run: aws deploy create-deployment --application-name $CODE_DEPLOY_APP_NAME --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name $DEPLOYMENT_GROUP_NAME --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          
           
