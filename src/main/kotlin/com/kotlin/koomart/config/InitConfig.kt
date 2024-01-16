@@ -16,6 +16,11 @@ class InitConfig(
     // 애플리케이션이 init되는 시점에 실행
     @EventListener(ApplicationReadyEvent::class)
     private fun init() {
+        // fixture로 CUD 테스트용 데이터 삽입
+        // key값이 "00000000-0000-0000-0000-000000000000"
+        memberRepository.save(Member.fixture())
+
+        // faker로 mock 데이터 삽입
         repeat(5) {
             val name = faker.name.let { n -> "${n.firstName()} ${n.lastName()}" }
             val saved = memberRepository.save(

@@ -11,12 +11,14 @@ import org.springframework.data.domain.Persistable
 import java.util.*
 
 @MappedSuperclass
-abstract class PrimaryKeyEntity : Persistable<UUID> {
+abstract class PrimaryKeyEntity(
+    _id: UUID?
+) : Persistable<UUID> {
 
     // 생성시간순으로 오름차순 정렬되므로 인덱싱에 유리함!
     @Id
     @Column(columnDefinition = "uuid")
-    private val id: UUID = UlidCreator.getMonotonicUlid().toUuid()
+    private val id: UUID = _id ?: UlidCreator.getMonotonicUlid().toUuid()
 
     // 내부적으로 사용되는 신규생성여부 체크 프로퍼티
     @Transient
