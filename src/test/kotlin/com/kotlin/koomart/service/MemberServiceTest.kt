@@ -49,6 +49,7 @@ class MemberServiceTest @Autowired constructor(
         memberService.deleteMember(random.id)
         val after = memberService.findAll()
         assertThat(after.size).isEqualTo(4)
+        println("변경내용 확인")
     }
 
 }
