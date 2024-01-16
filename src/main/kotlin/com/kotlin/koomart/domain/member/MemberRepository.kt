@@ -5,6 +5,7 @@ import java.util.*
 
 interface MemberRepository: Repository<Member, UUID> {
     fun findAll(): List<Member>
-    fun findById(uuid: UUID): Member
+    fun findById(uuid: UUID): Member?
     fun save(member: Member): Member
+    fun deleteById(uuid: UUID)
 }
