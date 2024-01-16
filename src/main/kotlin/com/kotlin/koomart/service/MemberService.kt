@@ -1,6 +1,5 @@
 package com.kotlin.koomart.service
 
-import com.kotlin.koomart.api.request.MemberSaveRequest
 import com.kotlin.koomart.domain.member.Member
 import com.kotlin.koomart.domain.member.MemberRepository
 import jakarta.transaction.Transactional
@@ -26,5 +25,9 @@ class MemberService(
         val findMember = findMember(id)
         memberRepository.deleteById(findMember.id)
         return findMember
+    }
+    @Transactional
+    fun deleteAllMember() {
+        memberRepository.deleteAllInBatch()
     }
 }

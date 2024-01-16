@@ -1,6 +1,6 @@
 package com.kotlin.koomart.config
 
-import com.kotlin.koomart.domain.member.Member
+import com.kotlin.koomart.domain.member.MemberFactory
 import com.kotlin.koomart.domain.member.MemberRepository
 import io.github.serpro69.kfaker.faker
 import org.springframework.boot.context.event.ApplicationReadyEvent
@@ -18,18 +18,11 @@ class InitConfig(
     private fun init() {
         // fixture로 CUD 테스트용 데이터 삽입
         // key값이 "00000000-0000-0000-0000-000000000000"
-        memberRepository.save(Member.fixture())
+        memberRepository.save(MemberFactory.fixture())
 
         // faker로 mock 데이터 삽입
         repeat(5) {
-            val name = faker.name.let { n -> "${n.firstName()} ${n.lastName()}" }
-            val saved = memberRepository.save(
-                Member(
-                    loginId = faker.string.bothify("${name.split(" ")[0].lowercase()}_####", false),
-                    name = name,
-                    password = faker.string.bothify("#?#?#?###???")
-                )
-            )
+            val saved = memberRepository.save(MemberFactory.fakeMember())
             println("member saved ::: [$it] ${saved.id}")
         }
     }
