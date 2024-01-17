@@ -1,5 +1,5 @@
 REPOSITORY=/home/ubuntu/kotlin-toy-project
-cd $REPOSITORY/build/libs
+cd $REPOSITORY
 
 APP_NAME=koomart
 #JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep 'koomart-0.0.1-SNAPSHOT.jar' | tail -n 1)
@@ -18,4 +18,4 @@ else
 fi
 
 echo "> $JAR_PATH 배포"
-nohup java -jar $JAR_PATH 1> /dev/null 2>&1 &
+nohup java -jar $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
