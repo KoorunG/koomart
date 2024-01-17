@@ -2,7 +2,7 @@ REPOSITORY=/home/ubuntu/kotlin-toy-project
 cd $REPOSITORY
 
 APP_NAME=kotlin-toy-project
-JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep 'SNAPSHOT.jar' | tail -n 1)
+JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep 'koomart-0.0.1-SNAPSHOT.jar' | tail -n 1)
 JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
 CURRENT_PID=$(pgrep -f $APP_NAME)
