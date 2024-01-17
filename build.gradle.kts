@@ -8,12 +8,15 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.21"
 }
 
+
+
 group = "com.kotlin"
 version = "0.0.1-SNAPSHOT"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
 }
+
 
 configurations {
 	compileOnly {
@@ -69,4 +72,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+// -plain.jar 생성 방지
+tasks.named<Jar>("jar") {
+	enabled = false
 }
