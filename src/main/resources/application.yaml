@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: koorung
     password: test1234
-    url: jdbc:postgresql://localhost:5432/koomart
+    url: jdbc:postgresql://database-test1.c98c6uco009k.ap-northeast-2.rds.amazonaws.com:5432/koomart
 
   jpa:
     hibernate:
