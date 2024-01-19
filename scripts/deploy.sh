@@ -1,4 +1,4 @@
-REPOSITORY=/home/ubuntu/kotlin-toy-project
+REPOSITORY="/home/ubuntu/kotlin-toy-project"
 cd $REPOSITORY
 
 APP_NAME=koomart

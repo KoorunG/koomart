@@ -4,12 +4,20 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/kotlin-toy-project
+    overwrite: yes
+
 permissions:
-  - object: /home/ubuntu/kotlin-toy-project/
+  - object: /
+    pattern: "**"
     owner: ubuntu
     group: ubuntu
+
 hooks:
   AfterInstall:
-    - location: scripts/deploy.sh
+    - location: scripts/stop.sh
+      timeout: 60
+      runas: ubuntu
+  ApplicationStart:
+    - location: scripts/start.sh
       timeout: 60
       runas: ubuntu
