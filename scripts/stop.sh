@@ -1,7 +1,7 @@
 # stop.sh
 
 PROJECT_ROOT="/home/ubuntu/kotlin-toy-project"
-JAR_FILE="$PROJECT_ROOT/koomart-0.0.1-SNAPSHOT.jar"
+JAR_FILE="$PROJECT_ROOT/build/libs/koomart-0.0.1-SNAPSHOT.jar"
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
 
