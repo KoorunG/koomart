@@ -9,7 +9,6 @@ spring:
     url: jdbc:postgresql://database-test1.c98c6uco009k.ap-northeast-2.rds.amazonaws.com:5432/koomart
     hikari:
       schema: kotlin
-
   jpa:
     hibernate:
       ddl-auto: create
@@ -21,6 +20,8 @@ spring:
     # Open Session In View 옵션... 기본값이 true임, false로 설정하자
     open-in-view: false
 
+server:
+  port: 8000
 ---
 
 spring:
