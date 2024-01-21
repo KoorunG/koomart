@@ -4,13 +4,7 @@ import com.kotlin.koomart.api.request.MemberSaveRequest
 import com.kotlin.koomart.api.response.MemberResponse
 import com.kotlin.koomart.domain.member.Member
 import com.kotlin.koomart.service.MemberService
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController

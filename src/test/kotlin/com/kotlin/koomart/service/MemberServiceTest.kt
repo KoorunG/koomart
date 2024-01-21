@@ -1,6 +1,6 @@
 package com.kotlin.koomart.service
 
-import com.kotlin.koomart.domain.member.MemberFactory
+import com.kotlin.koomart.domain.common.FakerFactory
 import jakarta.transaction.Transactional
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
@@ -14,12 +14,12 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest
 @ActiveProfiles("test")
 class MemberServiceTest @Autowired constructor(
-    private val memberService: MemberService
+    private val memberService: MemberService,
 ) {
     @BeforeEach
     fun init() {
         memberService.deleteAllMember()
-        repeat(5) { memberService.save(MemberFactory.fakeMember()) }
+        repeat(5) { memberService.save(FakerFactory.fakeMember()) }
     }
 
     @AfterEach
@@ -35,8 +35,7 @@ class MemberServiceTest @Autowired constructor(
 
     @Test
     fun `멤버 저장 테스트`() {
-        val fakeMember = MemberFactory.fakeMember()
-        memberService.save(fakeMember)
+        memberService.save(FakerFactory.fakeMember())
 
         val members = memberService.findAll()
         assertThat(members.size).isEqualTo(6)

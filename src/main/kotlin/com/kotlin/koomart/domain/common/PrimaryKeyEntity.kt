@@ -1,14 +1,11 @@
 package com.kotlin.koomart.domain.common
 
 import com.github.f4b6a3.ulid.UlidCreator
-import jakarta.persistence.Column
-import jakarta.persistence.Id
-import jakarta.persistence.MappedSuperclass
-import jakarta.persistence.PostLoad
-import jakarta.persistence.PostPersist
+import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
 import org.springframework.data.domain.Persistable
 import java.util.*
+import kotlin.jvm.Transient
 
 @MappedSuperclass
 abstract class PrimaryKeyEntity(
