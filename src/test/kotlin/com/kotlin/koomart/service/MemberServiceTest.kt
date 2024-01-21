@@ -1,54 +1,50 @@
 package com.kotlin.koomart.service
 
 import com.kotlin.koomart.domain.common.FakerFactory
+import com.kotlin.koomart.domain.member.MemberRepository
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 import jakarta.transaction.Transactional
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
-class MemberServiceTest @Autowired constructor(
+class MemberServiceTest(
     private val memberService: MemberService,
-) {
-    @BeforeEach
-    fun init() {
-        memberService.deleteAllMember()
-        repeat(5) { memberService.save(FakerFactory.fakeMember()) }
+    private val memberRepository: MemberRepository
+) : BehaviorSpec({
+    // 테스트 전에 DB에 미리 저장된 데이터 초기화
+    beforeSpec {
+        memberRepository.deleteAllInBatch()
     }
 
-    @AfterEach
-    fun cleanUp(){
-        memberService.deleteAllMember()
+    Given("DB에 미리 저장된 멤버가 존재한다.") {
+        repeat(5) {
+            memberRepository.save(FakerFactory.fakeMember())
+        }
+        When("모든 멤버를 조회한다.") {
+            val members = memberService.findAll()
+            Then("멤버가 5명임을 검증한다.") {
+                members.size shouldBe 5
+            }
+        }
+
+        When("멤버 하나를 저장한다.") {
+            memberService.save(FakerFactory.fakeMember())
+            val members = memberService.findAll()
+            Then("멤버가 6명임을 검증한다.") {
+                members.size shouldBe 6
+            }
+        }
+
+        When("모든 멤버를 삭제한다.") {
+            memberService.deleteAllMember()
+            val members = memberService.findAll()
+            Then("멤버가 0명임을 검증한다.") {
+                members.size shouldBe 0
+            }
+        }
     }
-
-    @Test
-    fun findAll() {
-        val members = memberService.findAll()
-        assertThat(members.size).isEqualTo(5)
-    }
-
-    @Test
-    fun `멤버 저장 테스트`() {
-        memberService.save(FakerFactory.fakeMember())
-
-        val members = memberService.findAll()
-        assertThat(members.size).isEqualTo(6)
-    }
-
-    @Test
-    fun `멤버 삭제 테스트`() {
-        val before = memberService.findAll()
-        val random = before.random()
-        memberService.deleteMember(random.id)
-        val after = memberService.findAll()
-        assertThat(after.size).isEqualTo(4)
-        println("변경내용 확인")
-    }
-
-}
+})
