@@ -1,16 +1,22 @@
 package com.kotlin.koomart.domain.post
 
 import com.kotlin.koomart.domain.common.PrimaryKeyEntity
+import com.kotlin.koomart.domain.member.Member
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import java.util.*
 
 @Entity
 class Post(
     title: String,
     contents: String,
-    _id: UUID? = null
-): PrimaryKeyEntity(_id) {
+    author: Member,
+): PrimaryKeyEntity() {
 
     @Column(nullable = false)
     var title = title
@@ -20,13 +26,8 @@ class Post(
     var contents = contents
         protected set
 
-    companion object {
-        fun fixture(
-            id: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000"),
-            title: String = "테스트글 제목",
-            contents: String = "테스트 글 내용"
-        ): Post {
-            return Post(_id = id, title = title, contents = contents)
-        }
-    }
+    @ManyToOne(targetEntity = Member::class, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(nullable = false)
+    var author = author
+        protected set
 }

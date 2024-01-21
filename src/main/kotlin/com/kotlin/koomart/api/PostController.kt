@@ -17,7 +17,8 @@ class PostController(
     fun findAllMembers() = postService.findAll().map {
         PostResponse(
             title = it.title,
-            contents = it.contents
+            contents = it.contents,
+            author = it.author.name
         )
     }
 
@@ -26,18 +27,14 @@ class PostController(
         val findPost = postService.findPost(id)
         return PostResponse(
             title = findPost.title,
-            contents = findPost.contents
+            contents = findPost.contents,
+            author = findPost.author.name
         )
     }
 
     @PostMapping
     fun savePost(@RequestBody request: PostSaveRequest): UUID {
-        return postService.save(
-            Post(
-                title = request.title,
-                contents = request.contents
-            )
-        )
+        return postService.save(request)
     }
 
     @DeleteMapping("/{id}")
@@ -45,7 +42,8 @@ class PostController(
         val deletePost = postService.deletePost(id)
         return PostResponse(
             title = deletePost.title,
-            contents = deletePost.contents
+            contents = deletePost.contents,
+            author = deletePost.author.name
         )
     }
 }
