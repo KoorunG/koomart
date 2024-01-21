@@ -1,5 +1,7 @@
 package com.kotlin.koomart.service
 
+import com.kotlin.koomart.api.request.MemberSaveRequest
+import com.kotlin.koomart.api.request.PostSaveRequest
 import com.kotlin.koomart.domain.member.Member
 import com.kotlin.koomart.domain.member.MemberRepository
 import jakarta.transaction.Transactional
@@ -14,9 +16,14 @@ class MemberService(
     fun findMember(id: UUID) = memberRepository.findById(id) ?: throw IllegalStateException("해당 멤버가 존재하지 않습니다! ::::: $id")
 
     @Transactional
-    fun save(member: Member): UUID {
-        val saved = memberRepository.save(member)
-        return saved.id
+    fun save(request: MemberSaveRequest): UUID {
+        val member = Member(
+            loginId = request.loginId,
+            name = request.name,
+            password = request.password
+        )
+        memberRepository.save(member)
+        return member.id
     }
 
     // DB에서 ID로 해당 회원을 조회한 뒤 삭제 로직을 돌려야함..

@@ -3,9 +3,11 @@ package com.kotlin.koomart.domain.common
 import com.kotlin.koomart.domain.member.Member
 import com.kotlin.koomart.domain.post.Post
 import io.github.serpro69.kfaker.faker
+import java.util.*
 
 // Faker 라이브러리를 이용한 가상객체 생성 함수
 object FakerFactory {
+
     fun fakeMember(): Member {
         val faker = faker { }
         return Member(
@@ -15,7 +17,7 @@ object FakerFactory {
         )
     }
 
-    fun fakePost(): Post {
+    fun fakePost(author: Member): Post {
         val faker = faker { fakerConfig { locale = "ko" } }
         // 랜덤 title 만들기
         val title = StringBuilder().let {
@@ -36,7 +38,8 @@ object FakerFactory {
         }
         return Post(
             title = title,
-            contents = contents
+            contents = contents,
+            author = author
         )
     }
 }
