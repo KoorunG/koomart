@@ -1,5 +1,8 @@
 package com.kotlin.koomart.service
 
+import com.kotlin.koomart.domain.common.FakerFactory
+import com.kotlin.koomart.domain.member.MemberRepository
+import com.kotlin.koomart.domain.post.PostRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import org.springframework.boot.test.context.SpringBootTest
@@ -10,12 +13,32 @@ import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest
 @ActiveProfiles("test")
-class PostServiceTest(postService: PostService) : BehaviorSpec({
+class PostServiceTest(
+    postService: PostService,
+    postRepository: PostRepository,
+    memberRepository: MemberRepository
+) : BehaviorSpec({
 
-    Given("DB에 글이 6개 존재한다.") {
-        val posts = postService.findAll()
-        Then("이 글이 6개임을 검증한다.") {
-            posts.size shouldBe 6
+    beforeSpec {
+        postRepository.deleteAllInBatch()
+        memberRepository.deleteAllInBatch()
+    }
+
+    afterSpec {
+        postRepository.deleteAllInBatch()
+        memberRepository.deleteAllInBatch()
+    }
+
+    Given("DB에 글을 10개 적재한다.") {
+        repeat(10) {
+            val member = memberRepository.save(FakerFactory.fakeMember())
+            postRepository.save(FakerFactory.fakePost(member))
+        }
+        When("글을 모두 조회한다.") {
+            val posts = postService.findAll()
+            Then("글이 10개임을 검증한다.") {
+                posts.size shouldBe 10
+            }
         }
     }
 })

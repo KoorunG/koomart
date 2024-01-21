@@ -1,5 +1,6 @@
 package com.kotlin.koomart.service
 
+import com.kotlin.koomart.api.request.MemberSaveRequest
 import com.kotlin.koomart.domain.common.FakerFactory
 import com.kotlin.koomart.domain.member.MemberRepository
 import io.kotest.core.spec.style.BehaviorSpec
@@ -20,9 +21,20 @@ class MemberServiceTest(
         memberRepository.deleteAllInBatch()
     }
 
+    afterSpec {
+        memberRepository.deleteAllInBatch()
+    }
+
     Given("DB에 미리 저장된 멤버가 존재한다.") {
         repeat(5) {
-            memberRepository.save(FakerFactory.fakeMember())
+            val member = FakerFactory.fakeMember()
+            memberService.save(
+                MemberSaveRequest(
+                    member.loginId,
+                    member.name,
+                    member.password
+                )
+            )
         }
         When("모든 멤버를 조회한다.") {
             val members = memberService.findAll()
@@ -32,7 +44,14 @@ class MemberServiceTest(
         }
 
         When("멤버 하나를 저장한다.") {
-            memberService.save(FakerFactory.fakeMember())
+            val member = FakerFactory.fakeMember()
+            memberService.save(
+                MemberSaveRequest(
+                    member.loginId,
+                    member.name,
+                    member.password
+                )
+            )
             val members = memberService.findAll()
             Then("멤버가 6명임을 검증한다.") {
                 members.size shouldBe 6
