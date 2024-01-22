@@ -35,7 +35,7 @@ class PostServiceTest(
             postRepository.save(FakerFactory.fakePost(member))
         }
         When("글을 모두 조회한다.") {
-            val posts = postService.findAll()
+            val posts = postService.findAllPosts()
             Then("글이 10개임을 검증한다.") {
                 posts.size shouldBe 10
             }
