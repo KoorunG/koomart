@@ -12,23 +12,10 @@ class MemberController(
     private val memberService: MemberService
 ) {
     @GetMapping
-    fun findAllMembers() = memberService.findAll().map {
-        MemberResponse(
-            loginId = it.loginId,
-            name = it.name,
-            password = it.password
-        )
-    }
+    fun findAllMembers() = memberService.findAll()
 
     @GetMapping("/{id}")
-    fun findMember(@PathVariable id: UUID): MemberResponse {
-        val findMember = memberService.findMember(id)
-        return MemberResponse(
-            loginId = findMember.loginId,
-            name = findMember.name,
-            password = findMember.password
-        )
-    }
+    fun findMember(@PathVariable id: UUID): MemberResponse = memberService.findMember(id)
 
     @PostMapping
     fun saveMember(@RequestBody request: MemberSaveRequest): UUID {
@@ -36,12 +23,5 @@ class MemberController(
     }
 
     @DeleteMapping("/{id}")
-    fun deleteMember(@PathVariable id: UUID): MemberResponse {
-        val deleteMember = memberService.deleteMember(id)
-        return MemberResponse(
-            loginId = deleteMember.loginId,
-            name = deleteMember.name,
-            password = deleteMember.password
-        )
-    }
+    fun deleteMember(@PathVariable id: UUID) = memberService.deleteMember(id)
 }

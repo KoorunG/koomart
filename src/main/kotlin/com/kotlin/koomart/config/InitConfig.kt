@@ -3,6 +3,7 @@ package com.kotlin.koomart.config
 import com.kotlin.koomart.domain.common.FakerFactory
 import com.kotlin.koomart.domain.member.MemberRepository
 import com.kotlin.koomart.domain.post.PostRepository
+import jakarta.persistence.EntityManager
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -22,8 +23,9 @@ class InitConfig(
         repeat(10) {
             val member = memberRepository.save(FakerFactory.fakeMember())
             println("member ::: [$it] ${member.loginId}")
-
-            val post = postRepository.save(FakerFactory.fakePost(member))
+        }
+        memberRepository.findAll().forEach {
+            val post = postRepository.save(FakerFactory.fakePost(it))
             println("post ::: [$it] ${post.title}")
         }
     }

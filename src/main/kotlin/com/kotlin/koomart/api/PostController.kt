@@ -12,25 +12,11 @@ import java.util.*
 class PostController(
     private val postService: PostService,
 ) {
-    // 엔티티 <-> DTO 변환은 컨트롤러에서 하도록 한다. (일단은...)
     @GetMapping
-    fun findAllMembers() = postService.findAll().map {
-        PostResponse(
-            title = it.title,
-            contents = it.contents,
-            author = it.author.name
-        )
-    }
+    fun findAllPosts() = postService.findAllPosts()
 
     @GetMapping("/{id}")
-    fun findPost(@PathVariable id: UUID): PostResponse {
-        val findPost = postService.findPost(id)
-        return PostResponse(
-            title = findPost.title,
-            contents = findPost.contents,
-            author = findPost.author.name
-        )
-    }
+    fun findPost(@PathVariable id: UUID): PostResponse = postService.findPost(id)
 
     @PostMapping
     fun savePost(@RequestBody request: PostSaveRequest): UUID {
@@ -38,12 +24,5 @@ class PostController(
     }
 
     @DeleteMapping("/{id}")
-    fun deletePost(@PathVariable id: UUID): PostResponse {
-        val deletePost = postService.deletePost(id)
-        return PostResponse(
-            title = deletePost.title,
-            contents = deletePost.contents,
-            author = deletePost.author.name
-        )
-    }
+    fun deletePost(@PathVariable id: UUID): PostResponse = postService.deletePost(id)
 }
